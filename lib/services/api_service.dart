@@ -57,11 +57,12 @@ class ApiService {
   }
 
   // Método genérico para realizar solicitudes DELETE
-  Future<dynamic> delete(String endpoint) async {
+  Future<void> delete(String endpoint) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl$endpoint'));
       if (response.statusCode == 200) {
-        return json.decode(response.body);
+        // No devuelvas el cuerpo de la respuesta, solo confirma el éxito
+        return;
       } else {
         throw Exception('Error ${response.statusCode}: ${response.reasonPhrase}');
       }
@@ -69,4 +70,6 @@ class ApiService {
       throw Exception('Error en la solicitud DELETE: $e');
     }
   }
+
+
 }

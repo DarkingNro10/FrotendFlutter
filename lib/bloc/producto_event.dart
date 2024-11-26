@@ -11,3 +11,17 @@ class AgregarProducto extends ProductoEvent {
 
   AgregarProducto(this.producto);
 }
+// Evento para actualizar un producto
+class ActualizarProducto extends ProductoEvent {
+  final Producto producto;
+
+  ActualizarProducto(this.producto);
+}
+
+// Evento para eliminar un producto
+class EliminarProducto extends ProductoEvent {
+  final int id;
+
+  EliminarProducto(this.id);
+}
+

@@ -32,6 +32,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.0
   http: ^1.2.2
+  path_provider: ^2.0.12
+  open_file: ^3.2.1
 
 
 

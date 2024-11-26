@@ -30,5 +30,30 @@ class ProductoBloc extends Bloc<ProductoEvent, ProductoState> {
         emit(ProductoError('Error al agregar el producto'));
       }
     });
+    // Evento para actualizar un producto
+    on<ActualizarProducto>((event, emit) async {
+      emit(ProductoLoading());
+      try {
+        await productoRepository.actualizarProducto(event.producto);
+        final productos = await productoRepository.obtenerProductos();
+        emit(ProductoLoaded(productos));
+      } catch (e) {
+        emit(ProductoError('Error al actualizar el producto: ${e.toString()}'));
+      }
+    });
+
+// Evento para eliminar un producto
+    on<EliminarProducto>((event, emit) async {
+      emit(ProductoLoading());
+      try {
+        await productoRepository.eliminarProducto(event.id);
+        final productos = await productoRepository.obtenerProductos();
+        emit(ProductoLoaded(productos));
+      } catch (e) {
+        emit(ProductoError('Error al eliminar el producto: ${e.toString()}'));
+      }
+    });
+
   }
+
 }

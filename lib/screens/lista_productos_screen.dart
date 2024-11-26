@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/producto_bloc.dart';
 import '../bloc/producto_event.dart';
 import '../bloc/producto_state.dart';
+import '../models/producto.dart';
+import 'editar_producto_screen.dart';
 
 class ListaProductosScreen extends StatelessWidget {
   @override
@@ -29,6 +31,49 @@ class ListaProductosScreen extends StatelessWidget {
                   child: ListTile(
                     title: Text(producto.nombre),
                     subtitle: Text('Costo: ${producto.costo}'),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            // Navegar a la pantalla para editar el producto
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditarProductoScreen(producto: producto),
+                              ),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            // Confirmar antes de eliminar
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: Text('Eliminar Producto'),
+                                content: Text('¿Estás seguro de eliminar este producto?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      context.read<ProductoBloc>().add(EliminarProducto(producto.id));
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Eliminar'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
